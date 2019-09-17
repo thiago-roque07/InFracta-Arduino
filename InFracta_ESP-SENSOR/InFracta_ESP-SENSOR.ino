@@ -3,19 +3,13 @@
 #include <WiFiUdp.h>
 #include <FS.h>
 #include <Wire.h>
-#include <MPU6050_tockn.h>
-
+#include "MPU6050.h"
 
 // MPU variables
+const int MPU=0x68;  
 //Variaveis para armazenar valores dos sensores
-float AcX, AcY, AcZ;
-float GyX, GyY, GyZ; 
-float AngleX, AngleY, AngleZ;
-float Tmp;
+float AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
 
-long timer = 0;
-
-MPU6050 mpu6050(Wire);
 
 const char ConfigFileName[] = "/var/network.conf";
 WiFiUDP Client;
@@ -58,8 +52,6 @@ enum {
   PING,
   STARTSAMPLE,
   STOPSAMPLE,
-
-  MPUCAL,
 } mycomm;
 
 bool flag_parse = false;
@@ -182,9 +174,7 @@ void loop()
         case STOPSAMPLE:
           adc_scheduler.detach();
           break;
-        case MPUCAL:
-          mpu6050.calcGyroOffsets(true);
-          break;  
+          
         case INVALID:
         default:
           Serial.write("Invalid command\n");
