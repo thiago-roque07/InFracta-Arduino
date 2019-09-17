@@ -29,11 +29,27 @@ void sample_and_send() {
 
 void acc_and_send() {
   capture_mpu();
+  
   make_osc_message("/AcX", AcX);
   oscsend();
   make_osc_message("/AcY", AcY);
   oscsend();
   make_osc_message("/AcZ", AcZ);
+  oscsend();
+
+  make_osc_message("/Rol", roll);
+  oscsend();
+  make_osc_message("/Pit", pitch);
+  oscsend();
+
+  make_osc_message("/GyX", gyroXangle);
+  oscsend();
+  make_osc_message("/GyY", gyroYangle);
+  oscsend();
+
+  make_osc_message("/KaX", kalAngleX);
+  oscsend();
+  make_osc_message("/KaY", kalAngleY);
   oscsend();
 }
 

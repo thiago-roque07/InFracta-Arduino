@@ -4,14 +4,33 @@
 #include <FS.h>
 #include <Wire.h>
 #include "MPU6050.h"
+#include <Kalman.h>
+
+// Create the Kalman instances
+Kalman kalmanX; 
+Kalman kalmanY;
 
 // MPU variables
 const int MPU=0x68;  
-//Variaveis para armazenar valores dos sensores
-float AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
-
 
 const char ConfigFileName[] = "/var/network.conf";
+
+//Variaveis para armazenar valores dos sensores
+float AcX,AcY,AcZ;
+float GyX,GyY,GyZ;
+float Tmp;
+
+double gyroXangle, gyroYangle; // Angle calculate using the gyro only
+double compAngleX, compAngleY; // Calculated angle using a complementary filter
+double kalAngleX, kalAngleY; // Calculated angle using a Kalman filter
+double gyroXrate, gyroYrate;
+
+double roll;
+double pitch;
+
+uint32_t timer;
+
+
 WiFiUDP Client;
 Ticker blink_scheduler, talk_scheduler, adc_scheduler, acc_scheduler;
 
