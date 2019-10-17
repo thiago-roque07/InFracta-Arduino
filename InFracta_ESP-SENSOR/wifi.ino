@@ -22,8 +22,8 @@ void network_search() {
       Serial.print(WiFi.RSSI(i));
       Serial.print(" dB @ channel ");
       Serial.print(WiFi.channel(i));
-      Serial.print(")");
-      Serial.println((WiFi.encryptionType(i) == ENC_TYPE_NONE)?" ":"*");
+      Serial.print(")\n");
+      //Serial.println((WiFi.encryptionType(i) == ENC_TYPE_NONE)?" ":"*");
       delay(10);
     }
   }
@@ -57,7 +57,7 @@ void connect() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 }
-
+/*
 void config_autoconnect(int enable) {
   File f;
   
@@ -80,3 +80,4 @@ void config_autoconnect(int enable) {
   }
 
 }
+*/

@@ -3,6 +3,8 @@
 #include <WiFiUdp.h>
 #include <FS.h>
 #include <Wire.h>
+#include <OSCMessage.h>
+#include <OSCBoards.h>
 #include "MPU6050.h"
 #include <Kalman.h>
 
@@ -167,7 +169,7 @@ void loop()
           blink_scheduler.attach(0.1, blink_led);
           int enable;
           sscanf(command_buffer, "%*s %d", &enable);
-          config_autoconnect(enable);
+          //config_autoconnect(enable);
           blink_scheduler.attach(0.5, blink_led);
           break;
         case PING:
@@ -176,7 +178,7 @@ void loop()
         case SENDPING:
           blink_scheduler.attach(0.1, blink_led);
           make_osc_message("/ping", 1);
-          oscsend();
+          //oscsend();
           blink_scheduler.attach(0.5, blink_led);
           break;
         case SENDDUMMY:
@@ -184,7 +186,7 @@ void loop()
           blink_scheduler.attach(0.1, blink_led);
           sscanf(command_buffer, "%*s %f", &dummyvalue);
           make_osc_message("/dummy", dummyvalue);
-          oscsend();
+          //oscsend();
           blink_scheduler.attach(0.5, blink_led);
           break;
         case STARTSAMPLE:
@@ -200,6 +202,8 @@ void loop()
       }
     }
   }
+  if(server_port)
+    acc_and_send();
 }
 
 
