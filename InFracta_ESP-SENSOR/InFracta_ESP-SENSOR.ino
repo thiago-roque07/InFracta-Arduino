@@ -90,20 +90,21 @@ void setup() {
   
   talk();
   pinMode(LED_BUILTIN, OUTPUT);
-  
+
+  /*
   Serial.println("Checking filesystem...");
-  
-  if (SPIFFS.begin()==false) {
+  if (SPIFFS.begin()==false){
     Serial.println("Filesystem is down. Formatting...");
     if(SPIFFS.format()) {
       Serial.println("Formating successful! Please, reboot device!");
     } else {
       Serial.println("Error formating filesystem.");
     }
-  } else {
+  } 
+  else{
     Serial.println("Filesystem operational!");
     Serial.println("Checking for network configuration file");
-    if (SPIFFS.exists(ConfigFileName)==false) {
+    if (SPIFFS.exists(ConfigFileName)==false){
       Serial.println("No configuration file found. Please, connect manually");
     } else {
       f = SPIFFS.open(ConfigFileName, "r");
@@ -115,10 +116,9 @@ void setup() {
       Serial.println("Autoconnecting!");
       print_connection();
       connect();
-    }
-    
-    
+      }
   }
+  */
   
   blink_scheduler.attach(0.5, blink_led);
   adc_scheduler.attach(0.02, sample_and_send);
@@ -147,6 +147,7 @@ void loop()
         case WIFICONNECT:
           blink_scheduler.attach(0.1, blink_led);
           sscanf(command_buffer, "%*s %d %s", &ssid_n, password);
+          Serial.printf("ssid_n=%d , password=%s \n", &ssid_n, password);
           config_connection(ssid_n, password);
           connect();
           blink_scheduler.attach(0.5, blink_led);
